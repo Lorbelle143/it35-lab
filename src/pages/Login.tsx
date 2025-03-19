@@ -56,7 +56,7 @@ const Login: React.FC = () => {
       <IonContent className='ion-padding'>
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <IonAvatar style={{ width: '120px', height: '120px', margin: 'auto' }}>
-            <img src='https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.YMieaRJ9fOB8rHFy_Ib9NgHaEK%26pid%3DApi&sp=1742371076T0cbb47d4448ad19d16f4c3ace9428922654c13fbead6192e658e12151f40cca7'
+            <img src='https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fc.tenor.com%2FN0dxXyNjYgAAAAAd%2Fanime-boy-anime.gif&sp=1742371654Tb64581d01aa5a1a6df4b9242b63309cc3ab348123f20aba65c2a5525d7345b6b'
               style={{ width: '100%', height: '100px', borderRadius: '50%' }}
               alt='User Avatar'
             />
