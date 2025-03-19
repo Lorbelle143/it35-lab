@@ -18,7 +18,7 @@ import {
 import { homeOutline, logOutOutline, rocketOutline } from 'ionicons/icons';
 import { Redirect, Route } from 'react-router';
 import Home from './Home';
-import About from './about';
+import About from './about'; // Corrected import path
 import Details from './Details';
 
 const Menu: React.FC = () => {
