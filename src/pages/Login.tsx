@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import {
   IonAlert,
   IonAvatar, 
@@ -53,7 +53,12 @@ const Login: React.FC = () => {
           <IonTitle>Login</IonTitle>
         </IonToolbar> 
       </IonHeader>
-      <IonContent className='ion-padding'>
+      <IonContent className='ion-padding' style={{ 
+        backgroundImage: "url('https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fc.tenor.com%2FN0dxXyNjYgAAAAAd%2Fanime-boy-anime.gif&sp=1742371654Tb64581d01aa5a1a6df4b9242b63309cc3ab348123f20aba65c2a5525d7345b6b')", 
+        backgroundSize: 'cover', 
+        backgroundPosition: 'center', 
+        backgroundAttachment: 'fixed'
+      }}>
         <div style={{ textAlign: 'center', marginBottom: '20px' }}>
           <IonAvatar style={{ width: '120px', height: '120px', margin: 'auto' }}>
             <img src='https://www.startpage.com/av/proxy-image?piurl=https%3A%2F%2Fc.tenor.com%2FN0dxXyNjYgAAAAAd%2Fanime-boy-anime.gif&sp=1742371654Tb64581d01aa5a1a6df4b9242b63309cc3ab348123f20aba65c2a5525d7345b6b'
