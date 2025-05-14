@@ -1,23 +1,22 @@
 import React, { useState } from 'react';
 import {
+  IonContent,
   IonSearchbar,
   IonList,
   IonItem,
   IonLabel,
-  IonContent,
   IonText,
-  IonIcon,
   IonButton,
+  IonIcon,
   IonBadge,
   IonCard,
-  IonCardContent,
+  IonCardContent
 } from '@ionic/react';
 import { close } from 'ionicons/icons';
 
 interface UtilityItem {
   name: string;
   status: 'Completed' | 'In Progress' | 'Pending';
-  type?: string;
 }
 
 const UtiliTrackSearch: React.FC = () => {
@@ -34,11 +33,6 @@ const UtiliTrackSearch: React.FC = () => {
     { name: 'Fuel Usage Report', status: 'Pending' },
     { name: 'Battery Backup Check', status: 'In Progress' },
     { name: 'Smart Grid Sync', status: 'Completed' },
-    { name: 'Outage Report Logging', status: 'Pending' },
-    { name: 'Customer Complaint Resolution', status: 'In Progress' },
-    { name: 'Schedule Equipment Maintenance', status: 'Pending' },
-    { name: 'Energy Consumption Audit', status: 'Completed' },
-    { name: 'Network Signal Check', status: 'In Progress' },
   ];
 
   const filteredItems = items.filter(item =>
@@ -67,13 +61,13 @@ const UtiliTrackSearch: React.FC = () => {
           <div style={{ display: 'flex', alignItems: 'center' }}>
             <IonSearchbar
               value={searchText}
-              onIonInput={(e) => setSearchText(e.detail.value!)}
+              onIonInput={(e) => setSearchText(e.detail.value ?? '')}
               placeholder="Search utility tasks..."
-              debounce={300}
+              debounce={200}
               style={{ flex: 1 }}
             />
             {searchText && (
-              <IonButton fill="clear" size="small" onClick={clearSearch}>
+              <IonButton fill="clear" onClick={clearSearch}>
                 <IonIcon icon={close} />
               </IonButton>
             )}
@@ -86,16 +80,17 @@ const UtiliTrackSearch: React.FC = () => {
           filteredItems.map((item, index) => (
             <IonItem key={index}>
               <IonLabel>
-                <h2 style={{ fontWeight: 'bold', fontSize: '1rem' }}>{item.name}</h2>
-                <p style={{ fontSize: '0.75rem', color: '#666' }}>
-                  Status: <IonBadge color={getBadgeColor(item.status)}>{item.status}</IonBadge>
+                <h2>{item.name}</h2>
+                <p>
+                  Status:{' '}
+                  <IonBadge color={getBadgeColor(item.status)}>{item.status}</IonBadge>
                 </p>
               </IonLabel>
             </IonItem>
           ))
         ) : (
-          <IonText color="medium" className="ion-padding">
-            No matching utility tasks found.
+          <IonText className="ion-padding" color="medium">
+            No matching tasks found.
           </IonText>
         )}
       </IonList>
