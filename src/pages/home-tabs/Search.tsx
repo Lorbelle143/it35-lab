@@ -7,7 +7,7 @@ import {
       IonTitle, 
       IonToolbar 
   } from '@ionic/react';
-  
+  import SearchContainer from '../../components/SearchContainer';
   const Search: React.FC = () => {
     return (
       <IonPage>
