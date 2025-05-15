@@ -10,7 +10,13 @@ import {
   IonIcon,
   IonBadge,
   IonCard,
-  IonCardContent
+  IonCardContent,
+  IonPage,
+  IonHeader,
+  IonToolbar,
+  IonTitle,
+  IonButtons,
+  IonBackButton
 } from '@ionic/react';
 import { close } from 'ionicons/icons';
 
@@ -21,6 +27,7 @@ interface UtilityItem {
 
 const UtiliTrackSearch: React.FC = () => {
   const [searchText, setSearchText] = useState('');
+  const [selectedItem, setSelectedItem] = useState<UtilityItem | null>(null);
 
   const items: UtilityItem[] = [
     { name: 'Electric Meter Reading', status: 'Completed' },
@@ -54,6 +61,50 @@ const UtiliTrackSearch: React.FC = () => {
     }
   };
 
+  // When item clicked, show details view
+  const handleItemClick = (item: UtilityItem) => {
+    setSelectedItem(item);
+  };
+
+  // Back button in detail view goes back to search list
+  const handleBack = () => {
+    setSelectedItem(null);
+  };
+
+  if (selectedItem) {
+    // Detail View
+    return (
+      <IonPage>
+        <IonHeader>
+          <IonToolbar>
+            <IonButtons slot="start">
+              <IonButton onClick={handleBack}>
+                <IonIcon slot="icon-only" icon={close} />
+              </IonButton>
+            </IonButtons>
+            <IonTitle>Task Details</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+
+        <IonContent className="ion-padding">
+          <IonCard>
+            <IonCardContent>
+              <IonText>
+                <h2>{selectedItem.name}</h2>
+                <p>Status: <IonBadge color={getBadgeColor(selectedItem.status)}>{selectedItem.status}</IonBadge></p>
+                <p>This is the detailed content about <b>{selectedItem.name}</b>.</p>
+              </IonText>
+            </IonCardContent>
+          </IonCard>
+          <IonButton expand="block" onClick={handleBack}>
+            Back to Search
+          </IonButton>
+        </IonContent>
+      </IonPage>
+    );
+  }
+
+  // Search List View
   return (
     <IonContent className="ion-padding">
       <IonCard>
@@ -78,7 +129,7 @@ const UtiliTrackSearch: React.FC = () => {
       <IonList>
         {filteredItems.length > 0 ? (
           filteredItems.map((item, index) => (
-            <IonItem key={index}>
+            <IonItem button key={index} onClick={() => handleItemClick(item)}>
               <IonLabel>
                 <h2>{item.name}</h2>
                 <p>

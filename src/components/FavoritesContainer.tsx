@@ -6,44 +6,45 @@ import {
   IonCol,
   IonCard,
   IonCardContent,
-  IonImg,
   IonText,
   IonIcon,
   IonButton,
+  IonSearchbar,
 } from '@ionic/react';
 import { heart, heartOutline } from 'ionicons/icons';
 
-const UtiliTrackFavorites: React.FC = () => {
-  const [favorites, setFavorites] = useState<{ title: string; img: string; liked: boolean }[]>([
+const SportsFavorites: React.FC = () => {
+  const [searchText, setSearchText] = useState('');
+  const [favorites, setFavorites] = useState([
     {
-      title: 'Electric Meter Quest',
-      img: 'https://i.pinimg.com/originals/12/14/54/121454ba8bfa40e7ce521993f9896fa9.gif',
-      liked: false,
+      title: 'Chess Mastery',
+      img: 'https://media.tenor.com/JuAwDcRY9lYAAAAC/chess-grandmaster.gif',
+      liked: true,
     },
     {
-      title: 'Water Leak Hunter',
-      img: 'https://i.pinimg.com/originals/17/e0/70/17e070f478a53f8d11d0d697ad43069c.gif',
-      liked: false,
+      title: 'Basketball Dunk Show',
+      img: 'https://media.giphy.com/media/l0Exk8EUzSLsrErEQ/giphy.gif',
+      liked: true,
     },
     {
-      title: 'Grid Sync Challenge',
-      img: 'https://i.pinimg.com/originals/cf/f0/e5/cff0e5dce67e0e24300dfcb5d9f616b4.gif',
-      liked: false,
+      title: 'Volleyball Spike Battle',
+      img: 'https://media.giphy.com/media/qYxvo5hDnbQVa3x6cB/giphy.gif',
+      liked: true,
     },
     {
-      title: 'Power Pole Patrol',
-      img: 'https://i.pinimg.com/originals/91/52/f9/9152f9d6e0b22a96a0b73d1fe4c9d2a4.gif',
-      liked: false,
+      title: 'Street Basketball Moves',
+      img: 'https://media.giphy.com/media/3o7TKF4CFoA0A4kZfG/giphy.gif',
+      liked: true,
     },
     {
-      title: 'Transformer Repair Run',
-      img: 'https://i.pinimg.com/originals/95/45/64/954564ffdd318c63d9e68cf49b401b82.gif',
-      liked: false,
+      title: 'Chess Opening Gambits',
+      img: 'https://media.tenor.com/RFqH0eGRrZsAAAAC/chess-gambit.gif',
+      liked: true,
     },
     {
-      title: 'Battery Backup Mission',
-      img: 'https://i.pinimg.com/originals/ed/07/ed/ed07ed6dc5f91cf203eec3e45628a053.gif',
-      liked: false,
+      title: 'Volleyball Defense Drill',
+      img: 'https://media.giphy.com/media/eJ9igIFoZcPejuVcLY/giphy.gif',
+      liked: true,
     },
   ]);
 
@@ -53,35 +54,100 @@ const UtiliTrackFavorites: React.FC = () => {
     );
   };
 
+  const filteredFavorites = favorites.filter(
+    item => item.title.toLowerCase().includes(searchText.toLowerCase()) && item.liked
+  );
+
   return (
     <IonContent className="ion-padding" style={{ display: 'flex', justifyContent: 'center' }}>
       <IonGrid style={{ maxWidth: '1000px' }}>
-        <IonRow className="ion-justify-content-center">
-          {favorites.map((item, index) => (
-            <IonCol size="12" sizeMd="4" key={index}>
-              <IonCard style={{ borderRadius: '20px', overflow: 'hidden', boxShadow: '0 4px 12px rgba(0,0,0,0.2)' }}>
-                <IonImg src={item.img} alt={item.title} style={{ height: '200px', objectFit: 'cover' }} />
-                <IonCardContent className="ion-text-center">
-                  <IonText>
-                    <h2 style={{ fontSize: '1.1rem', margin: '0.5rem 0', fontWeight: 'bold' }}>
-                      {item.title}
-                    </h2>
-                  </IonText>
-                  <IonButton fill="clear" onClick={() => toggleLike(index)}>
-                    <IonIcon
-                      icon={item.liked ? heart : heartOutline}
-                      color={item.liked ? 'danger' : 'medium'}
-                      style={{ fontSize: '1.5rem' }}
-                    />
-                  </IonButton>
-                </IonCardContent>
-              </IonCard>
+        <IonRow>
+          <IonCol size="12">
+            <IonSearchbar
+              value={searchText}
+              onIonInput={(e) => setSearchText(e.detail.value!)}
+              placeholder="Search your favorite sports..."
+              debounce={300}
+              animated
+            />
+          </IonCol>
+        </IonRow>
+        <IonRow className="ion-justify-content-center" style={{ gap: '1rem' }}>
+          {filteredFavorites.length > 0 ? (
+            filteredFavorites.map((item, index) => (
+              <IonCol size="12" sizeMd="4" key={index}>
+                <IonCard
+                  style={{
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    boxShadow: '0 8px 16px rgba(0,0,0,0.12)',
+                    transition: 'transform 0.2s ease, box-shadow 0.2s ease',
+                    cursor: 'pointer',
+                  }}
+                  onClick={() => toggleLike(index)}
+                  onMouseEnter={e => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1.03)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 12px 24px rgba(0,0,0,0.18)';
+                  }}
+                  onMouseLeave={e => {
+                    (e.currentTarget as HTMLElement).style.transform = 'scale(1)';
+                    (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 16px rgba(0,0,0,0.12)';
+                  }}
+                >
+                  <img
+                    src={item.img}
+                    alt={item.title}
+                    style={{
+                      width: '100%',
+                      height: '220px',
+                      objectFit: 'cover',
+                      display: 'block',
+                      userSelect: 'none',
+                      pointerEvents: 'none', // prevent gif pause on click
+                    }}
+                  />
+                  <IonCardContent className="ion-text-center" style={{ padding: '1rem' }}>
+                    <IonText>
+                      <h2
+                        style={{
+                          fontSize: '1.25rem',
+                          margin: '0.5rem 0',
+                          fontWeight: '700',
+                          color: '#222',
+                          userSelect: 'none',
+                        }}
+                      >
+                        {item.title}
+                      </h2>
+                    </IonText>
+                    <IonButton
+                      fill="clear"
+                      onClick={e => {
+                        e.stopPropagation(); // prevent card onClick toggle
+                        toggleLike(index);
+                      }}
+                      style={{ marginTop: '0.5rem' }}
+                      aria-label={item.liked ? 'Unlike' : 'Like'}
+                    >
+                      <IonIcon
+                        icon={item.liked ? heart : heartOutline}
+                        color={item.liked ? 'danger' : 'medium'}
+                        style={{ fontSize: '1.8rem' }}
+                      />
+                    </IonButton>
+                  </IonCardContent>
+                </IonCard>
+              </IonCol>
+            ))
+          ) : (
+            <IonCol size="12" className="ion-text-center">
+              <IonText color="medium">No favorites match your search.</IonText>
             </IonCol>
-          ))}
+          )}
         </IonRow>
       </IonGrid>
     </IonContent>
   );
 };
 
-export default UtiliTrackFavorites;
+export default SportsFavorites;

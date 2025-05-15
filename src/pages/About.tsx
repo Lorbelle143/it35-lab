@@ -12,9 +12,11 @@ const About: React.FC = () => {
   const [lastName, setLastName] = useState('');
   const [username, setUsername] = useState('');
   const [avatarPreview, setAvatarPreview] = useState<string | null>(null);
-  const [hobbies, setHobbies] = useState('Music, Traveling, Coding, Gaming');
-  const [quote, setQuote] = useState('“Life is what happens when you’re busy making other plans.” - John Lennon');
-  const [additionalInfo, setAdditionalInfo] = useState('I love experimenting with new technology and enjoy working on personal projects.');
+  // Chess related content
+  const [favoriteOpenings, setFavoriteOpenings] = useState('Sicilian Defense, Ruy Lopez, French Defense');
+  const [favoritePlayers, setFavoritePlayers] = useState('Magnus Carlsen, Garry Kasparov, Judit Polgar');
+  const [chessQuote, setChessQuote] = useState('“Chess is the gymnasium of the mind.” – Blaise Pascal');
+  const [additionalInfo, setAdditionalInfo] = useState('I enjoy analyzing chess games and improving my strategic thinking.');
   const [isEditable, setIsEditable] = useState(false);
   const history = useHistory();
 
@@ -44,6 +46,8 @@ const About: React.FC = () => {
 
   const toggleEditMode = () => setIsEditable(!isEditable);
 
+  // Save data handler can be added here to push changes to supabase if needed
+
   return (
     <IonPage>
       <IonHeader>
@@ -52,89 +56,101 @@ const About: React.FC = () => {
         </IonButtons>
         <div style={{ padding: '16px' }}>
           <IonText>
-            <h1 style={{ fontSize: '1.8rem', fontWeight: 600, margin: 0 }}>About Me</h1>
+            <h1 style={{ fontSize: '2rem', fontWeight: 700, margin: 0, color: '#222' }}>About Me</h1>
           </IonText>
         </div>
       </IonHeader>
 
-      <IonContent className="ion-padding" style={{ background: '#fff' }}>
+      <IonContent className="ion-padding" style={{ background: '#fafafa' }}>
         <IonGrid>
           <IonRow className="ion-justify-content-center">
             <IonCol size="12" sizeMd="6">
-              <IonCard style={{ borderRadius: '12px', padding: '20px', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
+              <IonCard style={{ borderRadius: '15px', padding: '30px 20px', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}>
                 <IonCardContent className="ion-text-center">
-                  <IonAvatar style={{ width: '120px', height: '120px', margin: '0 auto 16px' }}>
-                    <IonImg src={avatarPreview || 'https://via.placeholder.com/150'} />
+                  <IonAvatar style={{ width: '140px', height: '140px', margin: '0 auto 20px', border: '3px solid #4A90E2' }}>
+                    <IonImg src={avatarPreview || 'https://via.placeholder.com/150?text=Avatar'} />
                   </IonAvatar>
                   <IonText>
-                    <h2 style={{ marginBottom: '6px' }}>{username}</h2>
-                    <p style={{ fontSize: '1rem', color: '#666' }}>{firstName} {lastName}</p>
-                    <p style={{ fontSize: '0.9rem', color: '#999' }}>{email}</p>
+                    <h2 style={{ marginBottom: '4px', fontWeight: 700, fontSize: '1.6rem', color: '#333' }}>{username}</h2>
+                    <p style={{ fontSize: '1.1rem', color: '#666' }}>{firstName} {lastName}</p>
+                    <p style={{ fontSize: '0.95rem', color: '#999', letterSpacing: '0.03em' }}>{email}</p>
                   </IonText>
                 </IonCardContent>
               </IonCard>
 
               {/* Editable Sections */}
               {[{
-                label: 'Hobbies',
-                value: hobbies,
-                setValue: setHobbies
+                label: 'Favorite Chess Openings',
+                value: favoriteOpenings,
+                setValue: setFavoriteOpenings,
+                placeholder: 'e.g. Sicilian Defense, Ruy Lopez'
               }, {
-                label: 'Favorite Quote',
-                value: quote,
-                setValue: setQuote
+                label: 'Favorite Chess Players',
+                value: favoritePlayers,
+                setValue: setFavoritePlayers,
+                placeholder: 'e.g. Magnus Carlsen, Garry Kasparov'
+              }, {
+                label: 'Favorite Chess Quote',
+                value: chessQuote,
+                setValue: setChessQuote,
+                placeholder: 'e.g. Chess is the gymnasium of the mind.'
               }, {
                 label: 'Additional Info',
                 value: additionalInfo,
-                setValue: setAdditionalInfo
+                setValue: setAdditionalInfo,
+                placeholder: 'Tell us more about yourself'
               }].map((section, idx) => (
                 <IonCard
                   key={idx}
                   style={{
                     borderRadius: '12px',
-                    padding: '12px 16px',
-                    marginTop: '16px',
-                    boxShadow: '0 1px 6px rgba(0,0,0,0.04)'
+                    padding: '20px 24px',
+                    marginTop: '20px',
+                    boxShadow: '0 4px 12px rgba(74,144,226,0.12)',
+                    background: '#fff'
                   }}
                 >
                   <IonCardContent>
                     <IonText>
-                      <h3 style={{ fontSize: '1.2rem', fontWeight: 500, marginBottom: '8px' }}>{section.label}</h3>
+                      <h3 style={{ fontSize: '1.3rem', fontWeight: 600, marginBottom: '12px', color: '#2c3e50' }}>{section.label}</h3>
                       {isEditable ? (
                         <IonInput
                           value={section.value}
-                          onIonChange={(e) => section.setValue(e.detail.value!)}
-                          placeholder={`Enter your ${section.label.toLowerCase()}`}
+                          onIonChange={(e) => section.setValue(e.detail.value ?? '')}
+                          placeholder={section.placeholder}
                           style={{
                             fontSize: '1rem',
-                            background: '#f5f5f5',
+                            background: '#f0f4f8',
                             borderRadius: '8px',
-                            padding: '10px'
+                            padding: '12px 16px',
+                            color: '#34495e',
+                            border: '1.5px solid #4A90E2',
+                            transition: 'border-color 0.3s ease'
                           }}
                         />
                       ) : (
-                        <p style={{ fontSize: '1rem', color: '#444' }}>{section.value}</p>
+                        <p style={{ fontSize: '1.1rem', color: '#34495e', lineHeight: '1.5' }}>{section.value}</p>
                       )}
                     </IonText>
                   </IonCardContent>
                 </IonCard>
               ))}
 
-              {/* Edit Button */}
+              {/* Edit / Save Button */}
               <IonRow className="ion-justify-content-center ion-margin-top">
                 <IonButton
                   onClick={toggleEditMode}
                   expand="block"
                   style={{
                     width: '100%',
-                    borderRadius: '8px',
-                    background: '#333',
-                    fontWeight: 'bold',
-                    fontSize: '1rem',
-                    marginTop: '10px'
+                    borderRadius: '10px',
+                    background: isEditable ? '#27ae60' : '#4A90E2',
+                    fontWeight: '600',
+                    fontSize: '1.1rem',
+                    boxShadow: '0 4px 15px rgba(74,144,226,0.3)'
                   }}
                 >
-                  {isEditable ? 'Save' : 'Edit'}
+                  {isEditable ? 'Save Changes' : 'Edit Profile'}
                 </IonButton>
               </IonRow>
             </IonCol>
